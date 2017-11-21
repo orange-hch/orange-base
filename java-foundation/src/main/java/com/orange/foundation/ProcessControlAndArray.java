@@ -12,7 +12,7 @@ public class ProcessControlAndArray {
 	 * 数组demo
 	 */
 	public static void arrayDemo(){
-//		初始化
+//		初始化,数组长度指定后就不可变了
 		int[] intArray1 = new int[]{1,3,4,5,5,5}; //静态初始化
 		int[] intArray2 = new int[4]; //动态初始化
 		System.out.println("intArray1 = "+Arrays.toString(intArray1));
