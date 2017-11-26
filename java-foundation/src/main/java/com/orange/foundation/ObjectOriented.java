@@ -4,7 +4,8 @@ public class ObjectOriented {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
 //		inheritanceDemo();
 //		wrapperClassDemo();
-		objectDemo();
+//		objectDemo();
+		enumDemo();
 	}
 	/**
 	 * 继承demo
@@ -49,6 +50,9 @@ public class ObjectOriented {
 		System.out.println("两个包装类的实例比较："+(new Integer(2) == new Integer(2))); //两个包装类的实例比较：false 包装类其实是引用类型，指向同一个对象才会返回true
 	}
 	
+	/**
+	 * 类的一些特殊方法
+	 */
 	public static void objectDemo(){
 		Parent p1 = new Parent();
 		System.out.println(p1.toString()); //Object类提供的toString()方法总是返回该对象实现类的“类名+@+hashCode”值
@@ -68,6 +72,36 @@ public class ObjectOriented {
 //		equals()方法是Object类提供的一个实例方法，使用这个方法判断的标准和==运算符没有区别。所以一般会重写equals方法。
 //		Stirng已经重写了Object的equals()方法。 只要两个字符串所包含的字符序列相同，则返回true.
 		System.out.println("str1和str2是否equals："+(str1.equals(str2))); //str1和str2是否equals：true
+		
+//		8大包装类和String类都是不可变类（创建该类的实例后，该实例的实例变量是不可改变的）
+//		不可变类的实例状态不可改变，可以缓存不可变类的实例。如Integer就是缓存了-128~127之间的值
+		Integer in1 = new Integer(6); //新建Integer对象
+		Integer in2 = Integer.valueOf(6); //生成新的Integer对象，并缓存该对象
+		Integer in3 = Integer.valueOf(6); //直接在缓存里取对象
+		System.out.println(in1 == in2); //false
+		System.out.println(in2 == in3); //true
+		
+		Integer in4 = Integer.valueOf(200); 
+		Integer in5 = Integer.valueOf(200);
+		//Integer只缓存了-128~127之间的值，所以200对应的Integer没有被缓存
+		System.out.println(in4 == in5); //输出false
+	}
+	
+	/**
+	 * 枚举类的使用
+	 */
+	public static void enumDemo(){
+		Gender man= Gender.valueOf("MALE");
+		Gender man1= Enum.valueOf(Gender.class, "MALE"); //返回指定枚举类中指定名称的枚举值
+		System.out.println(man == man1); //true
+		
+		for(Gender gender : Gender.values()){ //返回该枚举类所有实例
+			System.out.println(gender.toString());//MALE,FEMALE
+			System.out.println(gender.getName()); //男，女    自己定义的方法 
+			System.out.println(gender.name()); //MALE,FEMALE  enum自带的方法，与toString()返回相同。一般用toString();
+		}
+		
+		
 	}
 	
 }
