@@ -5,7 +5,8 @@ public class ObjectOriented {
 //		inheritanceDemo();
 //		wrapperClassDemo();
 //		objectDemo();
-		enumDemo();
+//		enumDemo();
+		gcDemo();
 	}
 	/**
 	 * 继承demo
@@ -100,8 +101,19 @@ public class ObjectOriented {
 			System.out.println(gender.getName()); //男，女    自己定义的方法 
 			System.out.println(gender.name()); //MALE,FEMALE  enum自带的方法，与toString()返回相同。一般用toString();
 		}
+	}
+	/**
+	 * 垃圾回收机制
+	 */
+	public static void gcDemo(){
+		new Child();
+//		以下两个方法都是强制系统垃圾回收-这种机制只是通知系统进行垃圾回收，但系统是否进行垃圾回收依然不确定。
+		//System.gc();
+		Runtime.getRuntime().gc();
 		
-		
+//		以下两个方法强制垃圾回收机制调用对象的finalize()方法
+//		System.runFinalization();
+		Runtime.getRuntime().runFinalization();
 	}
 	
 }
@@ -171,5 +183,12 @@ class Child extends Parent{
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	/**
+	 * 在垃圾回收机制回收任何对象之前，总会先调用他的finalize()方法。可以在该方法中重新让一个引用变量引用该对象，则这个对象会由可恢复状态再次变回可达状态。
+	 */
+	@Override
+	public void finalize(){
+		System.out.println("系统正在清理Child对象的资源···");
 	}
 }
