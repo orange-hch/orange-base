@@ -6,7 +6,7 @@ public class ObjectOriented {
 //		wrapperClassDemo();
 //		objectDemo();
 //		enumDemo();
-		gcDemo();
+		gcDemo(); //使用命令来运行此程序  java -verbose:gc com.orange.foundation.ObjectOriented。 -verbose:gc 选项可以看到每次垃圾回收后的提示信息
 	}
 	/**
 	 * 继承demo
@@ -106,14 +106,16 @@ public class ObjectOriented {
 	 * 垃圾回收机制
 	 */
 	public static void gcDemo(){
-		new Child();
-//		以下两个方法都是强制系统垃圾回收-这种机制只是通知系统进行垃圾回收，但系统是否进行垃圾回收依然不确定。
-		//System.gc();
-		Runtime.getRuntime().gc();
-		
-//		以下两个方法强制垃圾回收机制调用对象的finalize()方法
-//		System.runFinalization();
-		Runtime.getRuntime().runFinalization();
+		for (int i = 0; i < 4; i++) {
+			new Child();
+			// 以下两个方法都是强制系统垃圾回收-这种机制只是通知系统进行垃圾回收，但系统是否进行垃圾回收依然不确定。
+			// System.gc();
+			Runtime.getRuntime().gc();
+
+			// 以下两个方法强制垃圾回收机制调用对象的finalize()方法
+			// System.runFinalization();
+			Runtime.getRuntime().runFinalization();
+		}
 	}
 	
 }
