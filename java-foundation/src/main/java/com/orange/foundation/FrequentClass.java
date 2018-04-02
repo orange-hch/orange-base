@@ -12,8 +12,11 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 
-import org.omg.Messaging.SyncScopeHelper;
-
+/**
+ * 常用基础类
+ * @author Administrator
+ *
+ */
 public class FrequentClass {
 	public static void main(String[] args){
 //		scannerKeyBoardTest();
@@ -36,11 +39,12 @@ public class FrequentClass {
 			String input = scanner.next();
 			if (input.contains("exit")){
 				System.out.println("程序退出");
-				return;
+				break;
 			}
 			System.out.println("键盘输入的内容是1：" + input);
-			
 		}
+		scanner.close();
+		return;
 	}
 	
 	/**
@@ -48,9 +52,19 @@ public class FrequentClass {
 	 */
 	public static void scannerXXX(){
 		Scanner scanner = new Scanner(System.in);
-		//hasNextXXX 要求键盘输入的必须类型是XXX,否则程序就会退出
-		while (scanner.hasNextLong()){
-			System.out.println("键盘输入的内容是：" + scanner.nextLong());
+		try {
+			//hasNextXXX 要求键盘输入的必须类型是XXX,否则程序就会退出
+			while (scanner.hasNextLong()){
+				System.out.println("键盘输入的内容是：" + scanner.nextLong());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (null != scanner){
+				System.out.println("关闭资源");
+				scanner.close();
+			}
 		}
 	}
 	
@@ -67,6 +81,10 @@ public class FrequentClass {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
+		} finally {
+			if (null != scanner) {
+				scanner.close();
+			}
 		}
 		System.out.println("文件内容如下：");
 		while (scanner.hasNextLine()){

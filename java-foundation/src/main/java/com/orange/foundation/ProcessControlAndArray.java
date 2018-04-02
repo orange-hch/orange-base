@@ -2,6 +2,11 @@ package com.orange.foundation;
 
 import java.util.Arrays;
 
+/**
+ * 流程控制和数组
+ * @author Administrator
+ *
+ */
 public class ProcessControlAndArray {
 	public static void main(String[] args) {
 		// switchDemo();

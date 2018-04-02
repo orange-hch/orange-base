@@ -1,5 +1,10 @@
 package com.orange.foundation;
 
+/**
+ * 对象
+ * @author Administrator
+ *
+ */
 public class ObjectOriented {
 	public static void main(String[] args)
 			throws ClassNotFoundException, InstantiationException, IllegalAccessException {
