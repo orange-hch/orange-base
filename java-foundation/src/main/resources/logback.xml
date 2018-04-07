@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<substitutionProperty name="log.proj" value="${project.artifactId}" />
+	<substitutionProperty name="log.base" value="/logs/${log.proj}" />
+    <substitutionProperty name="max.size" value="100MB" />
+    <jmxConfigurator />
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] [ %-5level %logger{80} - ${log.proj} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="file.debug" class="ch.qos.logback.core.rolling.RollingFileAppender"><!-- All Log Info -->
+        <File>${log.base}/${log.proj}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/${log.proj}_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                 <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="file.info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- <File>${log.base}/${log.proj}_info.log</File> -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/${log.proj}_info_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                 <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread]  %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+    <appender name="file.error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- <File>${log.base}/${log.proj}_info.log</File> -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/${log.proj}_error_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                 <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="file.warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- <File>${log.base}/${log.proj}_warn.log</File> -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/${log.proj}_warn_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                 <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter"><!-- 临界值过滤器,过滤掉低于指定临界值的日志 -->
+            <level>WARN</level>
+        </filter>
+    </appender>
+    
+    <appender name="security.info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<File>${log.base}/security.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.base}/security_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                 <maxFileSize>${max.size}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date -merchant -%msg%n</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+	</appender>
+	
+	<logger name="com.kmpay.cloud.log.Lgr" additivity="false">
+    		<appender-ref ref="security.info" />
+    		<level value="INFO"/>
+	</logger>
+
+    <root level="debug" additivity="false"> 
+        <appender-ref ref="stdout" />
+        <appender-ref ref="file.debug" />
+        <appender-ref ref="file.info" />
+        <appender-ref ref="file.error" />
+        <appender-ref ref="file.warn" />
+    </root>
+    
+    <logger name="org.springframework.data.redis.core.RedisConnectionUtils" additivity="false">
+		<appender-ref ref="console" />
+		<level value="ERROR" />
+	</logger>
+    <logger name="org.springframework.session.data.redis.RedisOperationsSessionRepository" additivity="false">
+		<appender-ref ref="console" />
+		<level value="ERROR" />
+	</logger>
+	<logger name="org.springframework.session.web" additivity="false" >
+		<appender-ref ref="console" />
+		<level value="ERROR" />
+	</logger>
+	<logger name="com.guocui.tty.commons.logger" additivity="false"> 
+ 		<appender-ref ref="security.info" /> 
+       	<level value="INFO" />
+	</logger>
+</configuration>
