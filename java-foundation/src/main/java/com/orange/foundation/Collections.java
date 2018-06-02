@@ -94,10 +94,10 @@ public class Collections {
 		// 当把对象放入HashSet中时，如果两个对象通过equals()方法比较返回true,这两个对象的hashCode值也应该相同。
 		// 如果两个对象通过equals()方法比较返回true,但是两个对象的hashCode()返回不同的hashCode值时，这将导致HashSet会把这两个对象保存在hash表的不同位置，从而使两个对象都可以添加成功，这就与Set集合的规则冲突了。
 		Boolean isAdd1 = books1.add(s3); // false
-											// HashSet集合判断两个元素相等的标准是两个对象通过equal()方法比较相等，并且两个对象的hashCode()方法返回值也相等。
+		// HashSet集合判断两个元素相等的标准是两个对象通过equal()方法比较相等，并且两个对象的hashCode()方法返回值也相等。
 		System.out.println(s1.equals(s3)); // true
 		System.out.println(s1.hashCode() == s3.hashCode()); // true
-															// String的获取hashCode的值是根据字符串来计算的，所以返回true。
+		// String的获取hashCode的值是根据字符串来计算的，所以返回true。
 		System.out.println(s1 == s3); // false 两个变量指向同一个对象才会返回true。
 		System.out.println(books1); // [水浒传, 西游记]
 
